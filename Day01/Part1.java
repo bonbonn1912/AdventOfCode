@@ -21,8 +21,6 @@ public class Part1 {
             }
         }
 
-        readFile.close();
-
         for (int i = 0; i < numbers.size() - 1; i++) {
             if (numbers.get(i) < numbers.get(i + 1)) {
                 counter++;
