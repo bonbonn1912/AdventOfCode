@@ -8,7 +8,6 @@ public class Part2 {
     public static void main(String[] args) throws Exception {
 
         File input = new File("PATH TO INPUT TXT FILE");
-        InputStream readFile = new FileInputStream(input);
         List<Integer> numbers = new LinkedList<Integer>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(input))) {
@@ -40,7 +39,6 @@ public class Part2 {
             }
         }
 
-        readFile.close();
         System.out.println(counter);
 
     }
