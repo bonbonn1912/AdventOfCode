@@ -9,7 +9,6 @@ public class Part1 {
     public static void main(String[] args) throws Exception {
 
         File input = new File("PATH TO INPUT TXT FILE");
-        InputStream readFile = new FileInputStream(input);
         List<Integer> numbers = new LinkedList<Integer>();
         int counter = 0;
 
