@@ -9,7 +9,6 @@ public class Part1 {
     public static void main(String[] args) throws Exception {
 
         File input = new File("PATH TO INPUT TXT FILE");
-        InputStream readFile = new FileInputStream(input);
         List<Integer> numbers = new LinkedList<Integer>();
         int counter = 0;
 
@@ -21,8 +20,6 @@ public class Part1 {
                 numbers.add(a);
             }
         }
-
-        readFile.close();
 
         for (int i = 0; i < numbers.size() - 1; i++) {
             if (numbers.get(i) < numbers.get(i + 1)) {
