@@ -12,7 +12,11 @@ import java.util.Scanner;
 
 //package Day04;
 
-public class Part1 {
+public class Part2 {
+
+    static Integer[][] lastBrett = new Integer[5][5];
+    public static String currCom = "";
+
     public static void main(String[] args) throws Exception {
 
         List<String> drawnNumbers = new LinkedList<String>();
@@ -31,7 +35,7 @@ public class Part1 {
                     drawnNumbers = Arrays.asList(line.split(","));
                     linecount++;
                 } else if (line.isEmpty()) {
-                   //Do nothing
+                    // Do nothing
                 } else {
                     writer.write(line.trim().replaceAll("\\s+", " ") + "\n");
                 }
@@ -58,21 +62,70 @@ public class Part1 {
             board.add(myArray);
             maxCounter = 0;
         }
-        System.out.println(checkWinner(board, drawnNumbers));
+        int anlauf = 1;
+        int lastnumber = 0;
+        LinkedList<String> NewdrawnNumbers = new LinkedList<String>();
+
+        for (String command : drawnNumbers) {
+            NewdrawnNumbers.add(command);
+        }
+        while (board.size() > 1) {
+            lastnumber = checkLastWinner(board, drawnNumbers);
+            anlauf++;
+        }
+        System.out.println(board.size());
+
+        for (Integer[][] brett : board) {
+            for (int i = 0; i < brett.length; i++) {
+                for (int j = 0; j < brett[i].length; j++) {
+                    System.out.printf("%d ", brett[i][j]);
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+        int last = drawnNumbers.indexOf(currCom) + 1;
+        String lastCommand = drawnNumbers.get(last);
+        int FinalNumber = 0;
+        Integer[][] exitBrett = new Integer[5][5];
+        for (Integer[][] brett : board) {
+            exitBrett = handleLastWinner(brett, lastCommand);
+            System.out.println(calculateRest(Integer.parseInt(lastCommand), exitBrett) * Integer.parseInt(lastCommand));
+        }
+
     }
 
-    public static int checkWinner(LinkedList<Integer[][]> board, List<String> drawnNumbers) {
+    public static Integer[][] handleLastWinner(Integer[][] brett, String Command) {
+        for (int i = 0; i < brett.length; i++) {
+            for (int j = 0; j < brett[i].length; j++) {
+                if (!checkWinningCondition(brett)) {
+                    if (brett[i][j] == Integer.parseInt(Command)) {
+                        brett[i][j] = 1000;
+                        return brett;
+                    }
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static int checkLastWinner(LinkedList<Integer[][]> board, List<String> drawnNumbers) {
         Integer[][] winningBoard = new Integer[5][5];
         for (String Command : drawnNumbers) {
             for (Integer[][] brett : board) {
                 for (int i = 0; i < brett.length; i++) {
                     for (int j = 0; j < brett[i].length; j++) {
                         if (brett[i][j] == Integer.parseInt(Command)) {
+                            currCom = Command;
                             brett[i][j] = 1000;
                             if (checkWinningCondition(brett)) {
-                                winningBoard = brett;
-                                int rest = calculateRest(Command, brett);
-                                return rest * Integer.parseInt(Command);
+                                deleteBrettFromList(brett, board, Command);
+                                return Integer.parseInt(Command);
+                            } else {
+                                return Integer.parseInt(Command);
                             }
 
                         }
@@ -82,6 +135,11 @@ public class Part1 {
             }
         }
         return 0;
+    }
+
+    public static void deleteBrettFromList(Integer[][] brett, LinkedList<Integer[][]> board, String Command) {
+        lastBrett = brett;
+        board.remove(brett);
     }
 
     public static boolean checkWinningCondition(Integer[][] brett) {
@@ -111,7 +169,7 @@ public class Part1 {
         return false;
     }
 
-    public static int calculateRest(String command, Integer[][] brett) {
+    public static int calculateRest(int command, Integer[][] brett) {
         int summ = 0;
         for (int i = 0; i < brett.length; i++) {
             for (int j = 0; j < brett[i].length; j++) {
