@@ -13,15 +13,12 @@ import java.util.Scanner;
 //package Day04;
 
 public class Part1 {
-
     public static void main(String[] args) throws Exception {
 
         List<String> drawnNumbers = new LinkedList<String>();
-
         File input = new File("D:\\Coding\\CalenderCode\\inputday4.txt");
         File output = new File("D:\\Coding\\CalenderCode\\day4temp.txt");
         List<String> binarys = new LinkedList<String>();
-
         FileWriter writer = new FileWriter(output);
 
         try (BufferedReader br = new BufferedReader(new FileReader(input))) {
@@ -34,14 +31,12 @@ public class Part1 {
                     drawnNumbers = Arrays.asList(line.split(","));
                     linecount++;
                 } else if (line.isEmpty()) {
-                    // writer.write("\n");
+                   //Do nothing
                 } else {
-
                     writer.write(line.trim().replaceAll("\\s+", " ") + "\n");
                 }
             }
             writer.close();
-
         }
 
         Scanner sc = new Scanner(new BufferedReader(new FileReader(output)));
@@ -49,92 +44,82 @@ public class Part1 {
         int columns = 5;
         LinkedList<Integer[][]> board = new LinkedList<Integer[][]>();
         int maxCounter = 0;
-        while(sc.hasNextLine()) {
+        while (sc.hasNextLine()) {
             Integer[][] myArray = new Integer[rows][columns];
-            if(maxCounter < 25){
-                for (int i=0; i<myArray.length; i++) {
+            if (maxCounter < 25) {
+                for (int i = 0; i < myArray.length; i++) {
                     String[] line = sc.nextLine().trim().split(" ");
-                    for (int j=0; j<line.length; j++) {
-                       myArray[i][j] = Integer.parseInt(line[j]);
+                    for (int j = 0; j < line.length; j++) {
+                        myArray[i][j] = Integer.parseInt(line[j]);
                     }
-                 }
-                 maxCounter++;
+                }
+                maxCounter++;
             }
             board.add(myArray);
-            maxCounter = 0;   
+            maxCounter = 0;
         }
-      Integer[][] winningBoard = new Integer[5][5];
-      for(String Command : drawnNumbers){
-          for(Integer[][] brett : board){
-            for (int i = 0; i<brett.length; i++){
-                for (int j = 0; j<brett[i].length; j++){
-                   if(brett[i][j] == Integer.parseInt(Command)){
-                        brett[i][j] = 1000;
-                        if(checkWinningCondition(brett)){
-                            winningBoard =  brett;
-                          int rest =   calculateRest(Command, brett);
-                         return rest*Integer.parseInt(Command);
+        System.out.println(checkWinner(board, drawnNumbers));
+    }
+
+    public static int checkWinner(LinkedList<Integer[][]> board, List<String> drawnNumbers) {
+        Integer[][] winningBoard = new Integer[5][5];
+        for (String Command : drawnNumbers) {
+            for (Integer[][] brett : board) {
+                for (int i = 0; i < brett.length; i++) {
+                    for (int j = 0; j < brett[i].length; j++) {
+                        if (brett[i][j] == Integer.parseInt(Command)) {
+                            brett[i][j] = 1000;
+                            if (checkWinningCondition(brett)) {
+                                winningBoard = brett;
+                                int rest = calculateRest(Command, brett);
+                                return rest * Integer.parseInt(Command);
+                            }
+
                         }
-                       
-                   }
-                }
-           
-           }
-          }
-      } 
-      for (int i = 0; i < winningBoard.length; i++) {
-        for (int j = 0; j < winningBoard[i].length; j++) {
-            System.out.printf("%d ", winningBoard[i][j]);
-        }
-        System.out.println();
-    }
-    System.out.println();
-
-    }
-
-    public static void ReadFile(){
-        
-    }
-
-    public static boolean checkWinningCondition(Integer[][] brett){
-        int counter = 0;
-        for(int i = 0; i < brett.length; i++){
-            for(int j = 0; j < brett[i].length; j++){
-                if(brett[i][j] == 1000){
-                    counter++;
-                    if(counter ==5){
-                      return true;
                     }
+
                 }
             }
-            counter = 0;
         }
-        for(int i = 0; i < brett.length; i++){
-            for(int j = 0; j < brett[i].length; j++){
-                if(brett[j][i] == 1000){
+        return 0;
+    }
+
+    public static boolean checkWinningCondition(Integer[][] brett) {
+        int counter = 0;
+        for (int i = 0; i < brett.length; i++) {
+            for (int j = 0; j < brett[i].length; j++) {
+                if (brett[i][j] == 1000) {
                     counter++;
-                    if(counter ==5){
+                    if (counter == 5) {
                         return true;
                     }
                 }
             }
             counter = 0;
         }
-      return false;
+        for (int i = 0; i < brett.length; i++) {
+            for (int j = 0; j < brett[i].length; j++) {
+                if (brett[j][i] == 1000) {
+                    counter++;
+                    if (counter == 5) {
+                        return true;
+                    }
+                }
+            }
+            counter = 0;
+        }
+        return false;
     }
 
-    public static int calculateRest(String command,Integer[][] brett ){
+    public static int calculateRest(String command, Integer[][] brett) {
         int summ = 0;
-        for(int i = 0; i < brett.length; i++){
-            for(int j = 0; j < brett[i].length; j++){
-                if(brett[i][j] != 1000){
-                  summ +=brett[i][j];
+        for (int i = 0; i < brett.length; i++) {
+            for (int j = 0; j < brett[i].length; j++) {
+                if (brett[i][j] != 1000) {
+                    summ += brett[i][j];
                 }
             }
         }
         return summ;
     }
-
-    
-
 }
