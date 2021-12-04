@@ -11,7 +11,7 @@ public class Part2_refactored {
 
     public static void main(String[] args) throws Exception {
      ArrayList<String> inputList = new ArrayList<String>();
-        File input = new File("PATH TO INPUT TXT FILE");
+        File input = new File("INPUT TO TEXT FILE");
 
         try (BufferedReader br = new BufferedReader(new FileReader(input))) {
             String line;
@@ -21,19 +21,6 @@ public class Part2_refactored {
         }
         System.out.println(Integer.parseInt(removeToLast(inputList,0,true),2)*Integer.parseInt(removeToLast(inputList,0,false),2));
     }
-
-    public static int calcuteProduct(String binary_part1) {
-        String inversed = "";
-        for(char c: binary_part1.toCharArray()) {
-            if(c == '1') {
-                inversed += '0';
-            }else{
-                inversed += '1';
-            }
-        }
-        return (Integer.parseInt(inversed,2)*Integer.parseInt(binary_part1,2));
-    }
-
     public static String removeToLast(ArrayList<String> liste, int index_, boolean mostBits) {
         if (liste.size() != 1) {
             if (createMostCommonBit(liste, index_)) {
