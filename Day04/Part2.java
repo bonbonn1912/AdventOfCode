@@ -20,8 +20,8 @@ public class Part2 {
     public static void main(String[] args) throws Exception {
 
         List<String> drawnNumbers = new LinkedList<String>();
-        File input = new File("D:\\Coding\\CalenderCode\\inputday4.txt");
-        File output = new File("D:\\Coding\\CalenderCode\\day4temp.txt");
+        File input = new File("PATH TO INPUT TXT FILE");
+        File output = new File("PATH TO OUTPUT TXT FILE");
         List<String> binarys = new LinkedList<String>();
         FileWriter writer = new FileWriter(output);
 
