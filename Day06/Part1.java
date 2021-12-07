@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Part1 {
 
-    static int daysRemaining = 150;
+    static int daysRemaining = 256;
 
     public static void main(String[] args) throws Exception {
         File input = new File("D:\\Coding\\CalenderCode\\inputday6.txt");
@@ -40,7 +40,8 @@ public class Part1 {
     }
 
     public static int decreaseLifetimeinList(LinkedList<Long> inputList, int days){
-       // System.out.println("Dremaining: " +days);
+        System.out.println("Days Remaining: " +days);
+        System.out.println("Current Amount of fishes: " +inputList.size());
         if (days == 0) {
             return inputList.size();
         }
