@@ -6,7 +6,7 @@ public class Part2 {
 
     public static void main(String[] args) throws Exception {
 
-        LinkedList<Integer> inputs = InputReader.getInput("INPUT TO TXT FILE");
+        LinkedList<Integer> inputs = InputReader.getInput("PATH TO INPUT TXT FILE");
         double averageValueInArray = inputs.stream().mapToInt(Integer::intValue).sum() / inputs.size();
         System.out.println(solve(inputs, (int) averageValueInArray));
         // Doesnt Work with the Text Input since the avg. is != x,0;

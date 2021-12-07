@@ -1,76 +1,43 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Comparator;
 import java.util.LinkedList;
-import java.io.*;
-import java.util.stream.*;
-import java.util.*;
+
 public class Part1 {
 
     public static void main(String[] args) throws Exception {
+
+        LinkedList<Integer> inputs = InputReader.getInput("PATH TO INPUT TXT FILE");
+        Comparator<Integer> order = Integer::compare;
+        inputs.sort(order.reversed());
+        System.out.println(solve(inputs, inputs.get(inputs.size()/2)));
        
-     List<Integer> allNumbers = StringInputReader.returnCommands();
+    }
 
-     int biggestNummber = Collections.max(allNumbers);
-     int smallestNummber = Collections.min(allNumbers);
-
-     
-     int maxfuel = 100000;
-     int newfuel = 0;
-     int bestNumber = 0;
-
-     for(Integer number : allNumbers) {
-         newfuel = 0;
-        System.out.println("Äußere Zahl : " +number);
-         for(Integer i : allNumbers) {
-            System.out.println("Innere Zahl : " +i);
-            double betrag = Math.sqrt((double) (Math.pow(i-number, 2)));
-            System.out.println("Difference" +(int)betrag);
-            newfuel += betrag;
-            if(newfuel < maxfuel) {
-                System.out.println("Für Nummber: " + number +" ist der Betrag : " + maxfuel);
-                bestNumber  =number;
-                maxfuel = newfuel;
-            }
-         }
-         
-         
-     }
-
-
-     System.out.println(newfuel);
-     System.out.println(bestNumber);
-    // System.out.println(biggestNummber);
-      
+    public static int solve(LinkedList<Integer> inputs, int avgValue) {
+        int distanceToEachElement = 0;
+        for (Integer number : inputs) {
+            distanceToEachElement += Math.abs(avgValue - number);                                                                                                 
+        }
+        return distanceToEachElement;
     }
 }
 
-class StringInputReader {
+class InputReader {
 
-   
-
-    static List<Integer> returnCommands() throws Exception {
-        File file = new File("D:\\Coding\\CalenderCode\\inputday7.txt");
-
-        InputStream inputStream = null;
-        List<Integer> ints = new LinkedList<Integer>();
+    public static LinkedList<Integer> getInput(String path) throws Exception {
+        File inputFile = new File(path);
+        FileInputStream inputStream = new FileInputStream(inputFile);
         int i;
-        char c;
-        String text = "";
-
-        try{
-            inputStream = new FileInputStream(file);
-            while ((i = inputStream.read()) != -1){
-                c = (char)i;
-                text += c;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            ints = Arrays.stream(text.split(","))
-          .map(Integer::parseInt)
-          .collect(Collectors.toList());
-         
-            inputStream.close();
+        String InputTxt = "";
+        LinkedList<Integer> numbers = new LinkedList<Integer>();
+        while ((i = inputStream.read()) != -1) {
+            InputTxt += (char) i;
         }
-        return ints;
+        for (String sNumber : InputTxt.split(",")) {
+            numbers.add(Integer.parseInt(sNumber));
+        }
+        inputStream.close();
+        return numbers;
     }
-
 }
