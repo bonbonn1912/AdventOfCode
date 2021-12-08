@@ -10,14 +10,14 @@ public class Part1 {
         LinkedList<Integer> inputs = InputReader.getInput("PATH TO INPUT TXT FILE");
         Comparator<Integer> order = Integer::compare;
         inputs.sort(order.reversed());
-        System.out.println(solve(inputs, inputs.get(inputs.size()/2)));
-       
+        System.out.println(solve(inputs, inputs.get(inputs.size() / 2)));
+
     }
 
     public static int solve(LinkedList<Integer> inputs, int avgValue) {
         int distanceToEachElement = 0;
         for (Integer number : inputs) {
-            distanceToEachElement += Math.abs(avgValue - number);                                                                                                 
+            distanceToEachElement += Math.abs(avgValue - number);
         }
         return distanceToEachElement;
     }
