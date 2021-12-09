@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Day04Part1 {
+public class Part1 {
 
     static int[][] field = new int[1000][1000];
 
