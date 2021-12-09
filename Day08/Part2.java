@@ -37,7 +37,8 @@ public class Part2 {
                 case NumberEight: valueForThisLine += 8;
                 default: noUnique.add(singleOutput);
             }
-        }    
+        }
+        System.out.println("Following outputs are not unique")
 
          // Two segements: 1
         // Three segements : 7
